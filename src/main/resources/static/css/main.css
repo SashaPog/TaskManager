@@ -1,0 +1,33 @@
+body {
+    background-image: url(background.jpg);
+    background-size: cover;
+    background-position: center;
+
+}
+
+
+.button-info{
+    margin-top: 20px;
+}
+
+a{
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.table tbody tr a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 0px;
+}
+
+.table-container {
+    border: 16px solid #212529;
+    border-radius: 20px;
+    overflow: hidden; /* Обрізаємо рамку за межами контейнера */
+}

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/main.css}" rel="stylesheet" type="text/css"/>
+    <title>Update User</title>
+</head>
+<body>
+
+<div th:replace="~{header :: header}">
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Static header</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div class="container-fluid mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2 col-sm-12 ">
+                <h1 class="display-4 text-light" style="font-family: Arial, sans-serif;">Update Existing User</h1>
+                <form class="form-horizontal" method="post" th:action="@{'/users/'+ ${user.id}+'/update'}" th:object="${user}">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label text-light" for="id">ID:</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" disabled id="id" type="text"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label text-light" for="first-name">First name:</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" id="first-name" th:field="*{firstName}" type="text"/>
+                            <small class="form-text text-warning" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label text-light" for="last-name">Last name:</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" id="last-name" th:field="*{lastName}" type="text"/>
+                            <small class="form-text text-warning" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label text-light" for="email">E-mail:</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" id="email" th:field="*{email}" type="email"/>
+                            <small class="form-text text-warning" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label text-light" for="old-password">Old Password:</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" id="old-password" name="oldPassword" required type="password"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label text-light" for="old-password">New Password:</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" id="new-password" required th:field="*{password}" type="password"/>
+                            <small class="form-text text-warning" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label text-light" for="role">Role:</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id="role" name="roleId">
+                                    <span th:each="role : ${roles}">
+                                        <option th:if="${role.id == user.role.id}" th:selected="${true}" th:text="${role.name.substring(0, 1) + role.name.substring(1).toLowerCase()}"
+                                                th:value="${role.id}"/>
+                                        <option th:text="${role.name.substring(0, 1) + role.name.substring(1).toLowerCase()}" th:unless="${role.id == user.role.id}"
+                                                th:value="${role.id}"/>
+                                    </span>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-offset-2 col-sm-8 button-info">
+                        <input class="btn btn-success" type="submit" value="Update"/>
+                        <input class="btn btn-secondary" type="reset" value="Clear"/>
+                        <input name="id" th:value="*{id}" type="hidden"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/main.css}" rel="stylesheet" type="text/css"/>
+    <title>Home page</title>
+</head>
+<body>
+<div th:replace="~{header :: header}">
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Static header</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+<div class="container-fluid mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2 col-sm-12 ">
+            <h1 class="display-4 text-light" style="font-family: Arial, sans-serif;">List of Users</h1>
+            <form action="/users/create" method="get">
+                <div class="text-end">
+                    <button class="btn btn-success btn-lg" type="submit">Create new User</button>
+                </div>
+            </form>
+            <br>
+            <div class="table-container">
+                <table class="table table-dark table-sm">
+                    <thead>
+                    <tr>
+                        <th scope="col">No.</th>
+                        <th scope="col">Full name</th>
+                        <th scope="col">E-mail</th>
+                        <th scope="col" colspan="2">Operations</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="user, iStat: ${users}">
+                        <th scope="row" th:text="${iStat.index + 1}"></th>
+                        <td>
+                            <a class="text-decoration-underline" th:href="@{|/todos/all/users/${user.id}|}" th:text="${user.firstName + ' ' + user.lastName}"></a>
+                        </td>
+                        <td th:text="${user.email}"></td>
+                        <td>
+                            <a class="btn btn-primary" th:href="@{|/users/${user.id}/update|}">Edit</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-danger" th:href="@{|/users/${user.id}/delete|}">Remove</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

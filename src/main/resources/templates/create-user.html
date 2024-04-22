@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/main.css}" rel="stylesheet" type="text/css"/>
+    <title>New User registration</title>
+
+</head>
+<body>
+<div class="container-fluid mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2 col-sm-12 ">
+            <h1 class="text-light">Create New User</h1>
+            <form class="form-horizontal" th:action="@{/users/create}" th:object="${user}" method="post">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label text-light" for="first-name">First name:</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" th:field="*{firstName}" id="first-name"/>
+                        <small class="form-text text-warning" th:if="${#fields.hasErrors('firstName')}"
+                               th:errors="*{firstName}"></small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label text-light" for="last-name">Last name:</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" th:field="*{lastName}" id="last-name"/>
+                        <small class="form-text text-warning" th:if="${#fields.hasErrors('lastName')}"
+                               th:errors="*{lastName}"></small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label text-light" for="last-name">Password:</label>
+                    <div class="col-sm-8">
+                        <input type="password" class="form-control" th:field="*{password}" id="password"/>
+                        <small class="form-text text-warning" th:if="${#fields.hasErrors('password')}"
+                               th:errors="*{password}"></small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label text-light" for="email">E-mail:</label>
+                    <div class="col-sm-8">
+                        <input type="email" class="form-control" th:field="*{email}" id="email"/>
+                        <small class="form-text text-warning" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+                    </div>
+                </div>
+                <div class="form-group" sec:authorize="hasRole('ADMIN')">
+                    <label class="col-sm-2 control-label text-light" for="role">Role:</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" id="role" th:field="*{role}">
+                            <option th:each="roleOption : ${roles}" th:value="${roleOption.id}" th:text="${roleOption.name}"/>
+                        </select>
+                        <input type="hidden" th:field="*{role}"/>
+                    </div>
+                </div>
+                <div class="button-info">
+                    <input type="submit" class="btn btn-success" value="Register"/>
+                    <input type="reset" class="btn btn-secondary" value="Clear"/>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/main.css}" rel="stylesheet" type="text/css"/>
+    <title>Create New Task</title>
+</head>
+<body>
+<div th:replace="~{header :: header}">
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Static header</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div class="container-fluid mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2 col-sm-12 ">
+            <div class="col-md-offset-2">
+                <h1 class="text-light">Create New Task</h1>
+            </div>
+            <form class="form-horizontal" th:action="@{|/tasks/create/todos/${todo.id}|}" th:object="${task}" method="post">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label text-light" for="name">Name:</label>
+                    <div class="col-sm-6">
+                        <input class="form-control" type="text" th:field="*{name}" id="name"/>
+                        <small class="form-text text-warning" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label text-light" for="priority">Priority:</label>
+                    <div class="col-sm-6">
+                        <select class="form-control" name="priority" id="priority">
+                            <option th:each="priority : ${priorities}" th:value="${priority}" th:text="${priority.name()
+                            .substring(0, 1) + priority.name().substring(1).toLowerCase()}"/>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-offset-2 col-sm-6 button-info">
+                    <input class="btn btn-success" type="submit" value="Create"/>
+                    <input class="btn btn-secondary" type="reset" value="Clear"/>
+                </div>
+                <input type="hidden" name="todoId" th:value="${todo.id}">
+            </form>
+
+            <div class="button-info">
+            <a class="btn btn-info" th:href="@{|/todos/${todo.id}/tasks|}">Go to Task List</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<div class="col-md-offset-2">-->
+<!--    <h2>Create New Task</h2>-->
+<!--</div>-->
+<!--<form class="form-horizontal" th:action="@{|/tasks/create/todos/${todo.id}|}" th:object="${task}" method="post">-->
+<!--    <div class="form-group">-->
+<!--        <label class="col-sm-2 control-label" for="name">Name:</label>-->
+<!--        <div class="col-sm-6">-->
+<!--            <input class="form-control" type="text" th:field="*{name}" id="name"/>-->
+<!--            <small class="form-text text-muted" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="form-group">-->
+<!--        <label class="col-sm-2 control-label" for="priority">Priority:</label>-->
+<!--        <div class="col-sm-6">-->
+<!--            <select class="form-control" name="priority" id="priority">-->
+<!--                <option th:each="priority : ${priorities}" th:value="${priority}" th:text="${priority.name()-->
+<!--                            .substring(0, 1) + priority.name().substring(1).toLowerCase()}"/>-->
+<!--            </select>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="col-sm-offset-2 col-sm-6">-->
+<!--        <input class="btn btn-info" type="submit" value="Create"/>-->
+<!--        <input class="btn btn" type="reset" value="Clear"/>-->
+<!--    </div>-->
+<!--    <input type="hidden" name="todoId" th:value="${todo.id}">-->
+<!--</form>-->
+<!--<a th:href="@{|/todos/${todo.id}/tasks|}">Go to Task List</a>-->
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
